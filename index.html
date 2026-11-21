@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Rijoda Labs · Own your intelligence</title>
+<meta name="description" content="Rijoda Labs builds local autonomy: a desktop agent, a runtime, models and quantisations, and the tools around them — open, private, measurable, on hardware you own."/>
+<meta name="theme-color" content="#F8F7F4"/>
+<meta property="og:title" content="Rijoda Labs · Own your intelligence"/>
+<meta property="og:description" content="Local autonomy, layer by layer: the Rijo Code desktop app, Rijo Core engine, Rijo Run, Rijo Box, Rijo Stack, Rijo Vector — and measured model releases like LFM3-Omni-2B Q4_K_S imx."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://rijoda.com"/>
+<meta property="og:image" content="https://rijoda.com/og.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="Rijoda Labs, own your intelligence"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Rijoda Labs · Own your intelligence"/>
+<meta name="twitter:description" content="Local autonomy, layer by layer: the Rijo Code desktop app, the open Rijo Core engine, a runtime, measured models and the tools around them."/>
+<meta name="twitter:image" content="https://rijoda.com/og.png"/>
+<link rel="preload" href="fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="fonts/plus-jakarta-sans-700.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="canonical" href="https://rijoda.com"/>
+<!--
+  Taste-skill design read: redesign/overhaul, calm premium aesthetic.
+  Vibe archetype: SOFT STRUCTURALISM (warm bone canvas, massive grotesk, airy soft-shadowed components).
+  Layout archetype: LAYERED CATALOG. The page now mirrors the lab: system map → products → models →
+  open source → status → measurements. Dials: DESIGN_VARIANCE 6 · MOTION_INTENSITY 5 · VISUAL_DENSITY 4
+-->
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='16'%20fill='%23A85B3E'/%3E%3Cpath%20d='M9%2048%2027%2018l10%2014%207-8%2011%2024Z'%20fill='%23fff'/%3E%3C/svg%3E"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://rijoda.com/#organization",
+      "name": "Rijoda Labs",
+      "url": "https://rijoda.com",
+      "logo": "https://rijoda.com/og.png",
+      "description": "Rijoda Labs builds local autonomy: a desktop agent, a runtime, models and quantisations, and the tools around them.",
+      "sameAs": [
+        "https://github.com/rijoda",
+        "https://huggingface.co/Rijoda"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://rijoda.com/#website",
+      "url": "https://rijoda.com",
+      "name": "Rijoda Labs",
+      "publisher": { "@id": "https://rijoda.com/#organization" },
+      "inLanguage": "en"
+    },
+    {
+      "@type": "ItemList",
+      "name": "Rijoda Labs products",
+      "itemListElement": [
+        { "@type": "SoftwareApplication", "name": "Rijo Code", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, Linux", "description": "The Rijo Code desktop app (coming): a workbench with projects, sessions, approvals and an activity inspector. The CLI and MCP are headless entry points. Built on the open Rijo Core engine." },
+        { "@type": "SoftwareApplication", "name": "Rijo Box", "applicationCategory": "DeveloperApplication", "description": "A disposable, isolated computer for an agent: own Rust VMM, Rust-first Linux guest, Servo. Early." },
+        { "@type": "SoftwareApplication", "name": "Rijo Run", "applicationCategory": "DeveloperApplication", "description": "A pure-Rust inference runtime for ordinary laptops. Working title; M0 kernels measured." },
+        { "@type": "SoftwareApplication", "name": "Rijo Stack", "applicationCategory": "DeveloperApplication", "description": "Web and desktop from one Rust codebase and one binary, with SQLite embedded. Prototype." },
+        { "@type": "SoftwareApplication", "name": "Rijo Vector", "applicationCategory": "DeveloperApplication", "description": "A JSON language for vector scenes that compiles deterministically to SVG. Core runs." }
+      ]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "Rijo Core",
+      "codeRepository": "https://github.com/rijoda/rijo-core",
+      "programmingLanguage": "Rust",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "description": "The open engine behind the Rijo Code desktop app: backend functions — executor, 34 native tools, guard, sessions, transcript model, brain, LLM adapter, MCP."
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "LFM3-Omni-2B Q4_K_S imx",
+      "version": "1.0.0",
+      "url": "https://huggingface.co/Rijoda/LFM3-Omni-2B-Q4_K_S-imx-GGUF",
+      "license": "https://huggingface.co/LiquidAI/LFM3-Omni-2B/blob/main/LICENSE",
+      "description": "A quantised derivative of Liquid AI's LFM3-Omni-2B, tuned for laptops without a discrete GPU. Smaller, lower perplexity and faster than stock Q4_K_M on the reference machine."
+    }
+  ]
+}
+</script>
+<style>
+  @font-face{font-family:"Plus Jakarta Sans";src:url("fonts/plus-jakarta-sans-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Plus Jakarta Sans";src:url("fonts/plus-jakarta-sans-500.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+  @font-face{font-family:"Plus Jakarta Sans";src:url("fonts/plus-jakarta-sans-600.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+  @font-face{font-family:"Plus Jakarta Sans";src:url("fonts/plus-jakarta-sans-700.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+
+  :root{
+    /* warm monochrome + a single muted accent */
+    --canvas:#F8F7F4; --surface:#FFFFFF; --surface-2:#FBFAF8;
+    --bezel:rgba(23,22,20,.035);
+    --ink:#18160F; --ink-2:#2B2822; --muted:#6F6B61; --faint:#757168;
+    --line:#E9E6DF; --line-2:#DEDAD0;
+    --accent:#A85B3E; --accent-ink:#8E4A31; --accent-soft:#F4E9E2; --accent-line:#E7D3C8;
+    --sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --shadow-sm:0 1px 2px rgba(23,22,20,.05);
+    --shadow-md:0 2px 6px rgba(23,22,20,.05), 0 14px 34px -18px rgba(23,22,20,.18);
+    --shadow-lg:0 4px 12px rgba(23,22,20,.05), 0 30px 60px -30px rgba(23,22,20,.22);
+    --ease:cubic-bezier(.32,.72,0,1);
+    --maxw:1120px;
+    --r-lg:26px; --r-md:18px; --r-sm:12px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--canvas);color:var(--ink);
+    font-family:var(--sans);font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+  .skip{position:absolute;left:-9999px;top:0;background:var(--ink);color:#fff;padding:10px 14px;border-radius:0 0 10px 0}
+  .skip:focus{left:0;z-index:100}
+
+  /* soft ambient light + film grain, both fixed and pointer-events-none */
+  .ambient{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+  .ambient span{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;animation:float 26s var(--ease) infinite alternate}
+  .ambient .a{width:640px;height:640px;top:-220px;left:50%;transform:translateX(-50%);
+    background:radial-gradient(closest-side,rgba(168,91,62,.20),transparent 70%)}
+  .ambient .b{width:520px;height:520px;top:38%;right:-160px;
+    background:radial-gradient(closest-side,rgba(168,91,62,.11),transparent 70%)}
+  @keyframes float{from{transform:translate(-50%,0) scale(1)}to{transform:translate(-52%,28px) scale(1.06)}}
+  .ambient .b{animation-name:float2}
+  @keyframes float2{from{transform:translateY(0) scale(1)}to{transform:translateY(36px) scale(1.08)}}
+  .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:24px}
+
+  /* floating island nav */
+  .navwrap{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:center;
+    padding:16px 16px 0;pointer-events:none}
+  .navpill{pointer-events:auto;display:flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.72);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);
+    border:1px solid rgba(23,22,20,.07);border-radius:999px;padding:7px 8px 7px 14px;box-shadow:var(--shadow-md)}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15.5px;text-decoration:none;letter-spacing:-.01em}
+  .mark{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(150deg,#BC6C4B,#8E4A31);box-shadow:0 6px 14px -6px rgba(142,74,49,.7)}
+  .mark svg{width:17px;height:17px;display:block}
+  .navlinks{display:flex;gap:4px;margin-left:8px}
+  .navlinks a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;padding:8px 12px;border-radius:999px;transition:color .35s var(--ease),background .35s var(--ease)}
+  .navlinks a:hover{color:var(--ink);background:rgba(23,22,20,.05)}
+  .navbtn{display:inline-flex;align-items:center;gap:8px;margin-left:6px;background:var(--ink);color:#fff;
+    text-decoration:none;font-size:14px;font-weight:600;padding:9px 16px;border-radius:999px;transition:transform .4s var(--ease),background .4s var(--ease)}
+  .navbtn:hover{background:#000;transform:translateY(-1px)}
+  .navbtn:active{transform:scale(.97)}
+
+  /* hero: calm, centered, the message is the design */
+  .hero{position:relative;min-height:100dvh;display:flex;align-items:center;justify-content:center;
+    padding:96px 0 80px;text-align:center;overflow:hidden}
+  .eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.02em;
+    color:var(--accent-ink);background:var(--accent-soft);border:1px solid var(--accent-line);
+    padding:7px 14px;border-radius:999px}
+  .eyebrow svg{width:13px;height:13px;border-radius:3px}
+  h1{font-size:clamp(42px,8vw,90px);line-height:1.02;letter-spacing:-.045em;font-weight:700;
+    margin:28px auto 0;max-width:15ch;text-wrap:balance}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:50ch;margin:28px auto 0;text-wrap:pretty}
+  .cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px}
+  .btn{display:inline-flex;align-items:center;gap:12px;padding:12px 14px 12px 22px;border-radius:999px;
+    font-size:15px;font-weight:600;text-decoration:none;border:1px solid transparent;
+    transition:transform .45s var(--ease),background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease)}
+  .btn .ic{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;flex:none;
+    transition:transform .45s var(--ease),background .45s var(--ease)}
+  .btn .ic svg{width:15px;height:15px}
+  .btn.primary{background:var(--ink);color:#fff;box-shadow:var(--shadow-md)}
+  .btn.primary .ic{background:rgba(255,255,255,.16)}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+  .btn.primary:hover .ic{transform:translate(3px,-2px) scale(1.06);background:rgba(255,255,255,.24)}
+  .btn.primary:active{transform:scale(.98)}
+  .btn.ghost{background:rgba(255,255,255,.6);color:var(--ink);border-color:var(--line-2);padding-left:22px}
+  .btn.ghost .ic{background:rgba(23,22,20,.06)}
+  .btn.ghost:hover{transform:translateY(-2px);border-color:var(--accent-line);box-shadow:var(--shadow-sm)}
+  .btn.ghost:hover .ic{transform:translate(3px,-2px) scale(1.06)}
+  .btn.ghost:active{transform:scale(.98)}
+  .hero-note{margin:26px auto 0;font-size:13.5px;color:var(--muted);max-width:100%}
+  .hero-note a{display:inline;text-decoration:none;color:var(--ink-2);
+    border-bottom:1px solid var(--line-2);padding-bottom:2px;transition:color .3s var(--ease),border-color .3s var(--ease)}
+  .hero-note a:hover{color:var(--accent-ink);border-color:var(--accent-line)}
+  .hero-note .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);
+    margin-right:8px;vertical-align:middle;position:relative;top:-1px}
+
+  /* hero 3D stage behind the copy (full-bleed, cover-fit) */
+  .hero-stage{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .hero-stage .hero-fallback{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;
+    object-position:center bottom;opacity:.78;transition:opacity 1.2s var(--ease)}
+  #hero-canvas{position:absolute;inset:0;z-index:1;display:block;width:100%;height:100%;
+    opacity:0;transition:opacity 1.4s var(--ease)}
+  #hero-canvas[data-state="ready"]{opacity:.78}
+  /* the fallback yields to the live 3D without any JavaScript */
+  #hero-canvas[data-state="ready"] + .hero-fallback{opacity:0}
+  .hero-scrim{position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(ellipse 62% 54% at 50% 46%,rgba(248,247,244,.97),rgba(248,247,244,.84) 50%,rgba(248,247,244,.34) 74%,rgba(248,247,244,0) 90%)}
+  .hero-copy{position:relative;z-index:2}
+
+  section{padding:clamp(88px,10vw,140px) 0;scroll-margin-top:96px}
+  .head{max-width:760px}
+  h2{font-size:clamp(30px,4.6vw,50px);line-height:1.06;letter-spacing:-.035em;font-weight:700;margin:0;text-wrap:balance}
+  .prose{color:var(--muted);font-size:clamp(16px,1.9vw,19px);max-width:64ch;margin:32px 0 0;text-wrap:pretty}
+  .prose strong{color:var(--ink-2);font-weight:600}
+
+  .loopline{margin-top:40px;font-size:14px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .loopline b{color:var(--accent-ink)}
+
+  /* double-bezel cards */
+  .shell{background:var(--bezel);border:1px solid var(--line);border-radius:var(--r-lg);padding:9px;
+    box-shadow:var(--shadow-sm);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease)}
+  .shell:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--line-2)}
+  .core{background:var(--surface);border-radius:calc(var(--r-lg) - 9px);padding:32px;height:100%;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+  .tag{display:inline-block;font-size:11.5px;font-weight:600;letter-spacing:.03em;color:var(--accent-ink);
+    background:var(--accent-soft);border-radius:999px;padding:4px 11px}
+  .core h3{margin:20px 0 0;font-size:20px;letter-spacing:-.02em;font-weight:700}
+  .core h3 .pname{display:inline-block;margin-left:7px;font-size:12px;font-weight:600;letter-spacing:.02em;color:var(--accent-ink);vertical-align:middle}
+  .core p{margin:14px 0 0;color:var(--muted);font-size:15px;text-wrap:pretty}
+  .core ul.stat{margin:18px 0 0;padding:0;list-style:none}
+  .core ul.stat li{position:relative;padding:11px 0 11px 18px;border-top:1px solid var(--line);color:var(--muted);font-size:14.5px;text-wrap:pretty}
+  .core ul.stat li:first-child{border-top:0}
+  .core ul.stat li b{color:var(--ink-2);font-weight:600}
+  .core ul.stat li::before{content:"";position:absolute;left:2px;top:18px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+
+  /* status chips */
+  .status{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;letter-spacing:.01em;
+    color:var(--muted);background:rgba(23,22,20,.035);border:1px solid var(--line);border-radius:999px;padding:4px 10px;white-space:nowrap}
+  .status .dot{width:6px;height:6px;border-radius:50%;background:var(--faint);flex:none}
+  .status.live{color:var(--accent-ink);background:var(--accent-soft);border-color:var(--accent-line)}
+  .status.live .dot{background:var(--accent)}
+  .pmeta{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .prod h3{font-size:22px}
+  .prod .agentline{margin-top:18px;font-size:14px;color:var(--ink-2);font-weight:500}
+  .prod .agentline b{color:var(--accent-ink)}
+  .cardlink{display:inline-flex;align-items:center;gap:7px;margin-top:20px;font-size:14px;font-weight:600;
+    color:var(--accent-ink);text-decoration:none;border-bottom:1px solid var(--accent-line);padding-bottom:2px}
+  .cardlink:hover{color:var(--accent);border-color:var(--accent)}
+  .cardlink svg{width:13px;height:13px;transition:transform .3s var(--ease)}
+  .cardlink:hover svg{transform:translate(2px,-2px)}
+
+  /* reusable catalog grid */
+  .grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:56px}
+  .grid.two{grid-template-columns:1fr}
+  .grid.tight{margin-top:18px}
+
+  /* app → engine architecture */
+  .arch{margin-top:48px;display:grid;gap:0}
+  .arch-node{border:1px solid var(--line);border-radius:var(--r-md);padding:26px;background:var(--surface);
+    box-shadow:var(--shadow-sm)}
+  .arch-node.app{background:linear-gradient(165deg,#FCF4F0,#FFFFFF 70%)}
+  .arch-node.engine{background:var(--surface-2)}
+  .arch-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .arch-node h3{margin:16px 0 0;font-size:22px;letter-spacing:-.02em;font-weight:700}
+  .arch-node p{margin:10px 0 0;color:var(--muted);font-size:14.5px;max-width:68ch;text-wrap:pretty}
+  .arch-node p b{color:var(--ink-2);font-weight:600}
+  .arch-flow{display:flex;justify-content:center;flex-wrap:wrap;gap:10px 34px;padding:10px 0;
+    color:var(--faint);font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+  .arch-flow span{display:inline-flex;align-items:center;gap:6px}
+  .arch-flow svg{width:12px;height:12px}
+
+  /* system map: five layers, readable as a stack */
+  .layers{margin-top:56px;border-top:1px solid var(--line)}
+  .layer{display:grid;grid-template-columns:56px minmax(0,220px) minmax(0,1fr);gap:24px;align-items:start;
+    padding:26px 0;border-bottom:1px solid var(--line)}
+  .layer .num{font-size:12.5px;font-weight:600;letter-spacing:.1em;color:var(--faint);font-variant-numeric:tabular-nums;padding-top:5px}
+  .layer .lname{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .layer .lname span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:5px}
+  .layer .ldesc{color:var(--muted);font-size:15px;text-wrap:pretty}
+  .layer .ldesc b{color:var(--ink-2);font-weight:600}
+
+  /* featured release */
+  .release{margin-top:48px;background:var(--bezel);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:9px;box-shadow:var(--shadow-md)}
+  .release-inner{background:linear-gradient(165deg,#FCF4F0,#FFFFFF 56%);border-radius:calc(var(--r-lg) - 9px);
+    padding:clamp(26px,4vw,46px);box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+  .release-top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .release-top .badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .release h3{font-size:clamp(28px,3.6vw,42px);line-height:1.05;letter-spacing:-.035em;font-weight:700;margin:22px 0 0}
+  .release h3 .pname{display:inline-block;margin-left:8px;font-size:12.5px;font-weight:600;letter-spacing:.02em;
+    color:var(--accent-ink);vertical-align:middle;background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:999px;padding:4px 10px}
+  .release .rlede{color:var(--muted);font-size:16px;max-width:58ch;margin:18px 0 0;text-wrap:pretty}
+  .release-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(24px,4vw,48px);margin-top:32px;align-items:start}
+  .r-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);
+    border-radius:16px;overflow:hidden}
+  .r-metric{background:var(--surface);padding:22px 20px}
+  .r-metric .big{font-size:clamp(22px,2.4vw,28px);font-weight:700;letter-spacing:-.03em;line-height:1.1;
+    color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:break-word}
+  .r-metric .cap{color:var(--muted);font-size:13px;margin-top:8px;line-height:1.45;text-wrap:pretty}
+  .rtable{width:100%;border-collapse:collapse;margin-top:26px;font-size:14.5px}
+  .rtable caption{text-align:left;font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--faint);padding-bottom:8px}
+  .rtable th,.rtable td{text-align:left;padding:10px 0;border-bottom:1px solid var(--line)}
+  .rtable th{font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .rtable th:nth-child(2),.rtable th:nth-child(3),.rtable td:nth-child(2),.rtable td:nth-child(3){text-align:right}
+  .rtable th:nth-child(2),.rtable td:nth-child(2){padding-right:10px}
+  .rtable th:nth-child(3),.rtable td:nth-child(3){padding-left:10px}
+  .rtable td:first-child{color:var(--ink-2);font-weight:500}
+  .rtable td b{color:var(--accent-ink)}
+  .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .fine{color:var(--faint);font-size:13px;margin:18px 0 0;max-width:62ch;text-wrap:pretty}
+
+  /* method steps */
+  .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:32px}
+  .step{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-md);padding:24px}
+  .step .n{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--accent-soft);
+    color:var(--accent-ink);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+  .step h4{margin:16px 0 0;font-size:15.5px;letter-spacing:-.01em;font-weight:700}
+  .step p{margin:10px 0 0;color:var(--muted);font-size:14px;text-wrap:pretty}
+  .step p b{color:var(--ink-2);font-weight:600}
+
+  /* soft metric panel: one container, hairline dividers via grid gap */
+  .panel{margin-top:56px;background:var(--bezel);border:1px solid var(--line);border-radius:var(--r-lg);
+    padding:9px;box-shadow:var(--shadow-md)}
+  .panel-inner{background:var(--line);border-radius:calc(var(--r-lg) - 9px);overflow:hidden;
+    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9)}
+  .metric{background:var(--surface);padding:32px 28px}
+  .metric .big{font-size:clamp(24px,2.9vw,32px);font-weight:700;letter-spacing:-.03em;line-height:1.1;
+    color:var(--accent);font-variant-numeric:tabular-nums;overflow-wrap:break-word}
+  .metric .cap{color:var(--muted);font-size:14.5px;margin-top:14px;text-wrap:pretty}
+  .src{color:var(--faint);font-size:14px;margin-top:24px}
+  blockquote{margin:48px auto 0;max-width:60ch;text-align:center;font-size:clamp(19px,2.4vw,26px);
+    line-height:1.4;letter-spacing:-.015em;font-weight:500;color:var(--ink-2)}
+  blockquote b{color:var(--accent-ink);font-weight:600}
+
+  .rows{margin-top:56px;display:grid;gap:0}
+  .row{display:grid;grid-template-columns:210px 1fr;gap:26px;padding:30px 0;border-top:1px solid var(--line)}
+  .row:last-child{border-bottom:1px solid var(--line)}
+  .row .k{font-weight:700;font-size:16px;letter-spacing:-.01em}
+  .row .v{color:var(--muted);text-wrap:pretty}
+  .row .v b{color:var(--ink-2);font-weight:600}
+
+  footer{padding:64px 0 80px;border-top:1px solid var(--line);color:var(--muted);font-size:14px}
+  .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .foot a{color:var(--ink);text-decoration:none;font-weight:500;transition:color .3s var(--ease)}
+  .foot a:hover{color:var(--accent-ink)}
+  .etym{color:var(--faint);font-size:13px;margin-top:6px}
+
+  /* quiet reveals (only when JS is active, so content is never hidden without it) */
+  html.js [data-reveal]{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  html.js [data-reveal].in{opacity:1;transform:none}
+
+  @media (min-width:880px){
+    .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid .span2{grid-column:span 2}
+    .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media (max-width:1000px){
+    .navlinks a{padding:8px 9px}
+    .panel-inner{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .steps{grid-template-columns:1fr}
+  }
+  @media (max-width:880px){
+    .navwrap{padding:12px 12px 0}
+    .navpill{width:100%;max-width:calc(100vw - 24px);flex-wrap:wrap;justify-content:center;
+      border-radius:24px;padding:8px 10px}
+    .navlinks{display:flex;order:3;width:100%;min-width:0;justify-content:center;gap:0;margin:4px 0 0;
+      overflow-x:auto;scrollbar-width:none}
+    .navlinks::-webkit-scrollbar{display:none}
+    .navlinks a{font-size:12.5px;padding:6px 6px;white-space:nowrap}
+    .navbtn{margin-left:8px}
+    .hero{padding-top:150px}
+    section{scroll-margin-top:150px}
+    .release-grid{grid-template-columns:1fr}
+    .layer{grid-template-columns:40px 1fr;gap:10px 16px}
+    .layer .ldesc{grid-column:2}
+  }
+  @media (max-width:600px){
+    .panel-inner{grid-template-columns:1fr}
+    .row{grid-template-columns:1fr;gap:6px}
+    .navpill{gap:2px}
+    .rtable{font-size:13.5px}
+    .rtable th:nth-child(2),.rtable td:nth-child(2){padding-right:8px}
+    .rtable th:nth-child(3),.rtable td:nth-child(3){padding-left:8px}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html.js [data-reveal]{opacity:1;transform:none}
+    .ambient span{animation:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+<script defer src="https://analytics.mo-freelancer.ch/script.js" data-website-id="a1f668f4-182c-46bb-aaa5-0bedfeeb6c03"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="ambient" aria-hidden="true"><span class="a"></span><span class="b"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="navwrap">
+  <nav class="navpill" aria-label="Primary">
+    <a class="logo" href="#top">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 19 9 7.5l3.3 5.5L15 10l6.5 9Z" fill="#fff"/></svg></span>
+      Rijoda Labs
+    </a>
+    <div class="navlinks">
+      <a href="#system">System</a>
+      <a href="#products">Products</a>
+      <a href="#models">Models</a>
+      <a href="#open">Open core</a>
+      <a href="#now">Now</a>
+      <a href="#measured">Proof</a>
+    </div>
+    <a class="navbtn" href="https://github.com/rijoda">GitHub</a>
+  </nav>
+</div>
+
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero-stage" aria-hidden="true">
+      <canvas id="hero-canvas" data-state="idle"></canvas>
+      <img class="hero-fallback" src="models/alps.svg" alt="" width="1600" height="1000" decoding="async"/>
+    </div>
+    <div class="hero-scrim" aria-hidden="true"></div>
+    <div class="hero-copy wrap">
+      <span class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="7" fill="#A85B3E"/><path d="M4 18 10 8l3 5 2-2 5 7Z" fill="#fff"/></svg>
+        Swiss-based · the local autonomy lab
+      </span>
+      <h1>Own your <em>intelligence.</em></h1>
+      <p class="lede">A desktop agent, a runtime, the models and the tools to run AI on hardware you own.
+        We publish the measurements — including where it is not enough yet.</p>
+      <div class="cta">
+        <a class="btn primary" href="#system">Explore the stack
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+        </a>
+        <a class="btn ghost" href="#models">See the models
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+        </a>
+      </div>
+      <p class="hero-note"><a href="#models"><span class="dot" aria-hidden="true"></span>Latest release · LFM3-Omni-2B Q4_K_S imx v1.0.0</a></p>
+    </div>
+  </section>
+
+  <section class="wrap" id="position" data-reveal>
+    <div class="head">
+      <h2>Autonomy should belong to you, not a server.</h2>
+      <p class="prose">We build for one question: <strong>how much can you do — and how much can you
+        own — without the cloud?</strong> More than most people expect. An agent that works for you,
+        models you can hold, your data staying yours. Small steps toward a future that is more utopian
+        than dystopian.</p>
+    </div>
+    <p class="loopline">Build · <b>Measure</b> · Publish · Explain · Repeat</p>
+  </section>
+
+  <section class="wrap" id="system" data-reveal>
+    <div class="head">
+      <h2>One lab, five layers.</h2>
+      <p class="prose">Rijoda Labs is not a single product. It is a stack that moves intelligence from
+        a server to your machine — and keeps every layer inspectable. Read it from the metal up.</p>
+    </div>
+    <div class="layers">
+      <div class="layer">
+        <div class="num">01</div>
+        <div class="lname"><span>Machine</span>Rijo Box</div>
+        <div class="ldesc">A disposable, isolated computer for the agent. Own Rust VMM, a Rust-first Linux guest, Servo — so the agent can run wild <b>without touching your host</b>.</div>
+      </div>
+      <div class="layer">
+        <div class="num">02</div>
+        <div class="lname"><span>Runtime</span>Rijo Run</div>
+        <div class="ldesc">A pure-Rust inference runtime for ordinary laptops. Own kernels, GGUF first, agent-aware scheduling. <b>Working title; M0 is measured.</b></div>
+      </div>
+      <div class="layer">
+        <div class="num">03</div>
+        <div class="lname"><span>Intelligence</span>Models &amp; quantisations</div>
+        <div class="ldesc">Open models we rebuild for a specific machine and measure against stock — and, next, <b>small models trained here</b> with published checkpoints and provenance.</div>
+      </div>
+      <div class="layer">
+        <div class="num">04</div>
+        <div class="lname"><span>Agent app</span>Rijo Code</div>
+        <div class="ldesc">The desktop app (coming) that does the work: projects, sessions, 34 native tools, MCP, browser. <b>The engine underneath is Rijo Core</b> — public and inspectable.</div>
+      </div>
+      <div class="layer">
+        <div class="num">05</div>
+        <div class="lname"><span>Output</span>Rijo Stack + Rijo Vector</div>
+        <div class="ldesc">What the agent builds with: web and desktop from one Rust codebase, and vector graphics it can write and edit as <b>deterministic SVG</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="products" data-reveal>
+    <div class="head">
+      <h2>The software.</h2>
+      <p class="prose">Five products, one stack. Some run today; some are early. Each card says which —
+        no roadmap theatre.</p>
+    </div>
+    <div class="grid">
+      <article class="shell span2">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The desktop app</span>
+            <span class="status live"><span class="dot" aria-hidden="true"></span>App coming · CLI v0.1.0</span>
+          </div>
+          <h3>Rijo Code</h3>
+          <p>The finished desktop app, still coming: a workbench where the agent does real work on
+            your machine — projects, sessions, approvals, 34 native tools, MCP, browser. The CLI is
+            the headless entry point today.</p>
+          <p class="agentline">Runs on the open engine <b>Rijo Core</b> — the app is the product, the engine is public.</p>
+          <a class="cardlink" href="#open">See how it is built
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The machine</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>Early · P0/P1</span>
+          </div>
+          <h3>Rijo Box</h3>
+          <p>A disposable, isolated computer for your agent. Own Rust VMM on KVM/WHPX, a Rust-first
+            Linux guest, Servo for the screen. A vCPU and a kernel already boot; a full Linux guest
+            is the next gate.</p>
+        </div>
+      </article>
+
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The runtime</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>M0 · working title</span>
+          </div>
+          <h3>Rijo Run</h3>
+          <p>A pure-Rust inference runtime for ordinary laptops: own CPU kernels, GGUF first,
+            agent-aware scheduling. M0 is measured on a local Qwen2.5-1.5B; G0 is not decided.</p>
+        </div>
+      </article>
+
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The builder</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>Prototype · CI green</span>
+          </div>
+          <h3>Rijo Stack</h3>
+          <p>Web and desktop from one Rust codebase and one binary, with SQLite embedded. Verified
+            end to end — auth, jobs, mail, migrations, MCP and deploy. No public release yet.</p>
+        </div>
+      </article>
+
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The generator</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>Core runs</span>
+          </div>
+          <h3>Rijo Vector</h3>
+          <p>A JSON language for vector scenes that compiles deterministically to SVG — built so a
+            model can create and surgically edit graphics. 365 tests, 202 error codes, an MCP server.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="models" data-reveal>
+    <div class="head">
+      <h2>Models you can hold.</h2>
+      <p class="prose">We publish two kinds of artifacts. <strong>Quantisations</strong> are open
+        models we rebuild for a specific machine and measure against the stock release.
+        <strong>Own models</strong> are trained here — still ahead. Every release ships with its
+        method, its numbers and its limits.</p>
+    </div>
+
+    <div class="release">
+      <div class="release-inner">
+        <div class="release-top">
+          <div class="badges">
+            <span class="tag">Published · Quantisation</span>
+            <span class="status live"><span class="dot" aria-hidden="true"></span>v1.0.0 · live on Hugging Face</span>
+          </div>
+          <span class="status"><span class="dot" aria-hidden="true"></span>LFM Open License v1.0</span>
+        </div>
+        <h3>LFM3-Omni-2B <span class="pname">Q4_K_S · mixed imatrix</span></h3>
+        <p class="rlede">A quantised derivative of Liquid AI's omni-modal 2B model, tuned for laptops
+          without a discrete GPU. Smaller, measurably better and faster than the stock Q4_K_M — on the
+          reference machine. No retraining, no fine-tuning.</p>
+
+        <div class="release-grid">
+          <div>
+            <div class="r-metrics">
+              <div class="r-metric"><div class="big">1007 MiB</div><div class="cap">Size · 4.7% smaller than stock</div></div>
+              <div class="r-metric"><div class="big">23.11</div><div class="cap">Perplexity · vs 24.06 stock (−4.0%)</div></div>
+              <div class="r-metric"><div class="big">18/22</div><div class="cap">Task suite · same as stock, no regression</div></div>
+              <div class="r-metric"><div class="big">34.0 t/s</div><div class="cap">Decode @512 · +9.3% vs stock</div></div>
+            </div>
+            <div class="actions">
+              <a class="btn primary" href="https://huggingface.co/Rijoda/LFM3-Omni-2B-Q4_K_S-imx-GGUF">Download on Hugging Face
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg></span>
+              </a>
+              <a class="btn ghost" href="#method">How we built it
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg></span>
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <table class="rtable">
+              <caption>Head to head, same text and tasks</caption>
+              <thead>
+                <tr><th scope="col">Metric</th><th scope="col">Stock Q4_K_M</th><th scope="col">Rijoda</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Size</td><td>1048.7 MiB</td><td><b>1007.1 MiB</b></td></tr>
+                <tr><td>Perplexity</td><td>24.06 ±0.44</td><td><b>23.11 ±0.42</b></td></tr>
+                <tr><td>Task suite</td><td>18/22</td><td><b>18/22</b></td></tr>
+                <tr><td>Decode @512</td><td>31.1 t/s</td><td><b>34.0 t/s</b></td></tr>
+                <tr><td>Decode @4096</td><td>28.8 t/s</td><td><b>33.3 t/s</b></td></tr>
+              </tbody>
+            </table>
+            <p class="fine">Measured on Intel Core Ultra 7 255U, Intel iGPU, Vulkan, llama.cpp b12110.
+              Speed: interleaved, 5 rounds, first 2 discarded, control model in the loop. This quant won
+              decode in all 10 pairwise comparisons.</p>
+          </div>
+        </div>
+
+        <p class="fine">Not a trained model: a derivative of <b>LiquidAI/LFM3-Omni-2B</b>. The multimodal
+          projector is not redistributed — pull the unmodified file from the base repository. “Liquid”,
+          “Liquid AI” and “LFM” are trademarks of Liquid AI, Inc.; this release is not endorsed by or
+          affiliated with Liquid AI. Full licence and NOTICE ship with the weights; commercial use is
+          conditioned on annual revenue below USD 10M (LFM Open License §5).</p>
+      </div>
+    </div>
+
+    <div id="method" style="scroll-margin-top:96px">
+      <div class="steps">
+        <div class="step">
+          <span class="n">1</span>
+          <h4>Profile the machine</h4>
+          <p>Decode reads every weight once per token, so bytes are speed — but <b>kernel format beats
+            file size</b>. On this iGPU, a smaller Q4_0 file was 18–25% slower. Profile first.</p>
+        </div>
+        <div class="step">
+          <span class="n">2</span>
+          <h4>Calibrate on the job</h4>
+          <p>An importance matrix over mixed prose + code. A code-only matrix improved perplexity and
+            <b>broke arithmetic</b> — so we measure tasks, not just one scalar.</p>
+        </div>
+        <div class="step">
+          <span class="n">3</span>
+          <h4>Measure, then publish</h4>
+          <p>Quality first, speed last. Cooled, interleaved runs, a control model, raw eval files and a
+            SHA256 manifest shipped with the weights. <b>The method transfers; the numbers do not.</b></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid two tight">
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">Next</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>In progress · no weights yet</span>
+          </div>
+          <h3>Own models, trained here.</h3>
+          <p>Small, purpose-built models with published checkpoints and data provenance — the Pythia
+            pattern. <b>RijoBench</b>, our agentic benchmark for tool use, safety and latency on the
+            reference machine, is built and baselining. No model release yet; we name that plainly.</p>
+        </div>
+      </article>
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The catalog</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>Growing</span>
+          </div>
+          <h3>What every release carries.</h3>
+          <p>A version, a SHA256 manifest, a model card, raw evaluation files, the exact method and a
+            licence/NOTICE. More quantisations follow as we tune them for the reference laptop — and
+            each one will be comparable, not just downloadable.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="open" data-reveal>
+    <div class="head">
+      <h2>Rijo Code is the app.<br>Rijo Core is the engine.</h2>
+      <p class="prose">Rijo Code — the finished desktop app, still coming — is the product you use.
+        Rijo Core — its engine — is the backend that executes tools, enforces the guard, manages
+        sessions and talks to models. We publish the engine; the app stays the product.</p>
+    </div>
+
+    <div class="arch">
+      <div class="arch-node app">
+        <div class="arch-head">
+          <span class="tag">Product · coming</span>
+          <span class="status"><span class="dot" aria-hidden="true"></span>Desktop app</span>
+        </div>
+        <h3>Rijo Code</h3>
+        <p>The workbench you will use once it ships: <b>projects, session tabs, approvals, activity
+          inspector</b> and the window model. The app is the product surface; its source stays private
+          while it matures.</p>
+      </div>
+
+      <div class="arch-flow" aria-hidden="true">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M6 14l6 6 6-6"/></svg>commands</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V4M6 10l6-6 6 6"/></svg>events</span>
+      </div>
+
+      <div class="arch-node engine">
+        <div class="arch-head">
+          <span class="tag">Open engine · public now</span>
+          <span class="status live"><span class="dot" aria-hidden="true"></span>Apache-2.0</span>
+        </div>
+        <h3>Rijo Core</h3>
+        <p>The backend functions underneath: <b>executor, 34 native tools, guard, sessions, transcript
+          model, inspect, LLM adapter, brain, config</b> and MCP. The CLI and <code style="font-family:inherit">rijo mcp serve</code>
+          are headless entry points to the same engine.</p>
+      </div>
+    </div>
+
+    <div class="grid two tight">
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">Open engine</span>
+            <span class="status live"><span class="dot" aria-hidden="true"></span>Public since 2026-11-08</span>
+          </div>
+          <h3><code style="font-family:inherit">rijo-core</code></h3>
+          <p>The engine as a library: executor, 34 native tools, guard, sessions, transcript model,
+            UI event contract, <code style="font-family:inherit">inspect</code>, LLM adapter, brain and
+            config. Rust. <b>Apache-2.0.</b></p>
+          <a class="cardlink" href="https://github.com/rijoda/rijo-core">github.com/rijoda/rijo-core
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </article>
+      <article class="shell">
+        <div class="core prod">
+          <div class="pmeta">
+            <span class="tag">The app</span>
+            <span class="status"><span class="dot" aria-hidden="true"></span>Desktop app · coming</span>
+          </div>
+          <h3>Rijo Code</h3>
+          <p>The finished desktop app, still coming: a workbench with projects, session tabs, approvals
+            and an activity inspector. The CLI is the headless entry point today; MCP reaches the same
+            engine. The app source stays private — <b>the app is the product</b>, not the crate.</p>
+        </div>
+      </article>
+    </div>
+    <p class="src"><b>Rijo Core is Apache-2.0.</b> The CLI and MCP ship with the public engine; the
+      desktop app source stays private. This website's code is MIT OR Apache-2.0; documentation
+      licensing is being finalised. The trademark search for the name is still open.</p>
+  </section>
+
+  <section class="wrap" id="now" data-reveal>
+    <div class="head">
+      <h2>Where we are, right now.</h2>
+      <p class="prose">No roadmap theatre. This is the state of each part today — running, in progress,
+        or still only researched.</p>
+    </div>
+    <div class="grid">
+      <article class="shell">
+        <div class="core">
+          <span class="tag">Running today</span>
+          <h3>Running and working</h3>
+          <ul class="stat">
+            <li><b>Rijo Code</b> — CLI v0.1.0, the daily driver.</li>
+            <li><b>Rijo Core</b> — public engine since 2026-11-08.</li>
+            <li><b>LFM3-Omni quant</b> — v1.0.0 live on Hugging Face.</li>
+            <li><b>Rijo Stack</b> — builds and runs; CI green.</li>
+            <li><b>Rijo Vector</b> — core runs; 365 tests.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="shell">
+        <div class="core">
+          <span class="tag">In progress</span>
+          <h3>Being built and measured</h3>
+          <ul class="stat">
+            <li><b>Rijo Code desktop app</b> — workbench, packaging, parity.</li>
+            <li><b>Rijo Run</b> — M0 kernels measured; G0 not decided.</li>
+            <li><b>Rijo Box</b> — vCPU + kernel boot; Linux guest next.</li>
+            <li><b>Own models</b> — RijoBench baselines; no weights yet.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="shell">
+        <div class="core">
+          <span class="tag">Research</span>
+          <h3>Researched, not built</h3>
+          <ul class="stat">
+            <li><b>Vector diffusion</b> — the method is still unnamed.</li>
+            <li><b>Reasoning core + memory</b> — S0 error budget first.</li>
+            <li><b>FrugalMoE</b> — an optional research track (ADR 0008).</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="wrap" id="measured" data-reveal>
+    <div class="head">
+      <h2>Proof, not promises.</h2>
+      <p class="prose">Six numbers from three layers of the stack. Each one names its setup in the
+        linked release note or benchmark; none of them is a universal claim.</p>
+    </div>
+    <div class="panel">
+      <div class="panel-inner">
+        <div class="metric"><div class="big">188×–1037×</div><div class="cap">Faster native tool calls than a Python reference (agent).</div></div>
+        <div class="metric"><div class="big">26% → 94%</div><div class="cap">Prompt-cache hit rate after the schema fix (agent).</div></div>
+        <div class="metric"><div class="big">33×</div><div class="cap">Less prefill with a persistent local server and prefix-KV reuse (670 → 5 tokens).</div></div>
+        <div class="metric"><div class="big">23.11 PPL</div><div class="cap">LFM3-Omni quant vs 24.06 stock — 4.0% lower, in a smaller file.</div></div>
+        <div class="metric"><div class="big">34.0 tok/s</div><div class="cap">Decode @512 on the reference laptop, +9.3% vs stock Q4_K_M.</div></div>
+        <div class="metric"><div class="big">18/22</div><div class="cap">Task suite score of the quant — identical to stock, no regression.</div></div>
+      </div>
+    </div>
+    <p class="src">Measured in our own agent and model benchmarks, on our own hardware. Reproducible.</p>
+    <blockquote>Not &lsquo;we are the fastest&rsquo;. Here is the measurement, here is the code,
+      and here is <b>where it is not enough yet</b>.</blockquote>
+  </section>
+
+  <section class="wrap" id="not" data-reveal>
+    <div class="head">
+      <h2>What we are not.</h2>
+    </div>
+    <div class="rows">
+      <div class="row"><div class="k">Not a frontier lab</div><div class="v">We do not train giant models or race the big labs. <b>Small, local and useful</b> is the point.</div></div>
+      <div class="row"><div class="k">Not a cloud provider</div><div class="v">Working <b>without</b> the cloud is the whole idea, not a paid tier.</div></div>
+      <div class="row"><div class="k">Not a closed assistant</div><div class="v">Rijo Code's engine is <b>open and inspectable</b> — it works for you, not for a platform.</div></div>
+      <div class="row"><div class="k">Not a model trainer — yet</div><div class="v">We publish tuned <b>quantisations of open models</b> today. Our own weights are planned, not shipped.</div></div>
+      <div class="row"><div class="k">No invented numbers</div><div class="v">Every claim is measured, or marked open. <b>Honest notes are the brand.</b></div></div>
+      <div class="row"><div class="k">Not finished</div><div class="v">Rijo Box, Rijo Run, the model and the generator are <b>early</b>. We name what is still open.</div></div>
+      <div class="row"><div class="k">A provisional name</div><div class="v">Rijoda is chosen but not yet cleared — the <b>formal trademark search is pending</b>.</div></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div><strong style="color:var(--ink)">Rijoda Labs</strong> · Own your intelligence.</div>
+      <div class="etym">Rijoda, from the Proto-Celtic root *&#595;riy-, &ldquo;free&rdquo; · 46.8&deg; N, 8.2&deg; E</div>
+      <div class="etym">Website code under MIT OR Apache-2.0 · name provisional, trademark search pending.</div>
+    </div>
+    <div style="white-space:nowrap">
+      <a href="https://github.com/rijoda">github.com/rijoda</a> &nbsp;·&nbsp;
+      <a href="https://huggingface.co/Rijoda">huggingface.co/Rijoda</a> &nbsp;·&nbsp;
+      <a href="/llms.txt">llms.txt</a>
+    </div>
+  </div>
+</footer>
+
+<script type="importmap">
+  { "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+<script type="module" src="./hero.js?v=3"></script>
+
+<script>
+  (function(){
+    var root = document.documentElement;
+    root.classList.add('js');
+    var els = document.querySelectorAll('[data-reveal]');
+    function showAll(){ els.forEach(function(e){ e.classList.add('in'); }); }
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) { showAll(); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.15 });
+    els.forEach(function(e){ io.observe(e); });
+    // safety net: nothing stays invisible
+    setTimeout(function(){
+      els.forEach(function(e){
+        if (e.getBoundingClientRect().top < window.innerHeight) e.classList.add('in');
+      });
+    }, 1500);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+# Rijoda Labs
+
+> Own your intelligence. Rijoda Labs builds local autonomy: a desktop agent, a runtime, models
+> and quantisations, and the tools around them — open, private, measurable, on hardware you own.
+
+Status: early. First public artifacts shipped (Rijo Core, LFM3-Omni quant); the site is one
+static page, no build step.
+
+## Home
+
+- `/` : the system map, the five products, the model releases, open core, current status,
+  measurements, and what we are not
+
+## System map
+
+1. Machine — **Rijo Box**: disposable, isolated computer for the agent.
+2. Runtime — **Rijo Run**: pure-Rust inference for ordinary laptops (working title, M0).
+3. Intelligence — **models & quantisations**: tuned open models today; own models next.
+4. Agent — **Rijo Code**: the desktop app (coming), built on the open **Rijo Core** engine;
+   CLI + MCP are headless entry points today.
+5. Output — **Rijo Stack** (web + desktop) and **Rijo Vector** (deterministic SVG).
+
+## Products
+
+- Rijo Code — the desktop app (coming): the workbench that does real work on your machine —
+  projects, sessions, approvals, 34 native tools, MCP, browser. The CLI and `rijo mcp serve` are
+  headless entry points today. Built on the open Rijo Core engine.
+- Rijo Box — the agent's own machine: own Rust VMM (KVM/WHPX), Rust-first Linux guest, Servo.
+  Early; a vCPU and a kernel boot, a full Linux guest is next.
+- Rijo Run — the runtime: pure-Rust inference, own CPU kernels, GGUF first, agent-aware scheduling.
+  Working title; M0 measured on a local Qwen2.5-1.5B, G0 not decided.
+- Rijo Stack — the builder: web and desktop from one Rust codebase and one binary. Prototype,
+  verified, CI green; no public release yet.
+- Rijo Vector — the generator: a JSON language that compiles deterministically to SVG. Core runs
+  (365 tests, 202 error codes); not published.
+
+## Models & quantisations
+
+- **LFM3-Omni-2B Q4_K_S imx v1.0.0** — published 2026-11-05, live on Hugging Face:
+  https://huggingface.co/Rijoda/LFM3-Omni-2B-Q4_K_S-imx-GGUF
+  - Base: `LiquidAI/LFM3-Omni-2B` (LFM Open License v1.0). Not a trained model; a quantised derivative.
+  - Method: importance matrix over mixed prose + code, `llama-quantize`, llama.cpp b12110.
+  - Result: 1007.1 MiB (4.7% smaller), perplexity 23.11 vs 24.06 stock (4.0% lower), task suite
+    18/22 (same), decode 34.0 t/s @512 and 33.3 t/s @4096 (up to +15.6%).
+  - Measured on Intel Core Ultra 7 255U, Intel iGPU, Vulkan. The method transfers; the numbers do not.
+- Own models — planned, no weights yet. RijoBench (agentic tool-use/ safety/ latency benchmark) is
+  built and baselining.
+
+## Open core
+
+- **Rijo Core** — the open engine and backend functions underneath Rijo Code: executor, 34 native
+  tools, guard, sessions, transcript model, UI event contract, inspect, LLM adapter, brain, config,
+  MCP. Rust, Apache-2.0. Public since 2026-11-08:
+  https://github.com/rijoda/rijo-core
+- **Rijo Code** — the desktop app (the product surface, coming). The CLI v0.1.0 and `rijo mcp serve`
+  are headless entry points to the same engine. The app source stays private while it matures.
+- Rijo Core is Apache-2.0; this website's code is MIT OR Apache-2.0. Documentation/website licensing
+  is being finalised.
+
+## Measured
+
+- 188x to 1037x faster native tool calls than a Python reference (agent).
+- 26% to 94% prompt-cache hit rate, after the schema fix (agent).
+- 33x less prefill with a persistent local server and prefix-KV reuse, 670 to 5 tokens (agent).
+- 23.11 perplexity for the LFM3-Omni quant vs 24.06 stock, in a 4.7% smaller file.
+- 34.0 tok/s decode at 512 context, +9.3% vs stock Q4_K_M.
+- 18/22 task-suite score, identical to stock (no regression).
+
+## Honest open points
+
+- The name Rijoda is provisional; the formal trademark search (classes 9 + 42) is pending.
+- Rijo Box, Rijo Run and the vector-diffusion model are early; the diffusion method is not named.
+- Rijo Code's desktop app is still coming; the CLI is the headless entry point today.
+- Rijo Vector runs but has no public release.
+- We publish quantisations of open models; our own model weights are planned, not shipped.
+- The quant's numbers are one machine and one backend (Vulkan on an Intel iGPU); CUDA, Metal and
+  CPU behaviour are unmeasured.
+- The LFM3 quant is a derivative under the LFM Open License v1.0: commercial use is conditioned on
+  annual revenue below USD 10M; Liquid AI does not endorse it and its marks are used only to
+  describe origin.
+- Website/documentation licence is not final; Rijo Core is Apache-2.0 and the website code is
+  MIT OR Apache-2.0.
+
+## Contact
+
+- Website: https://rijoda.com
+- GitHub: https://github.com/rijoda
+- Hugging Face: https://huggingface.co/Rijoda
